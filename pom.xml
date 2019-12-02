@@ -61,7 +61,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>ponto.WebDriverExample</mainClass>
+							<mainClass>ponto.GeraPonto</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
