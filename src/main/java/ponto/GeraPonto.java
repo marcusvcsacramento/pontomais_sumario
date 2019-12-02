@@ -7,6 +7,10 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import util.Util;
 
@@ -14,6 +18,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
 import java.util.*;
+import java.util.logging.Level;
 
 public class GeraPonto {
 	
@@ -28,9 +33,20 @@ public class GeraPonto {
 		Properties prop = util.getProperties(args[0]);
 		System.setProperty("webdriver.gecko.driver", prop.getProperty("geckodriver_path"));
 		
+		LoggingPreferences pref = new LoggingPreferences();
+		pref.enable(LogType.BROWSER,Level.OFF);
+		pref.enable(LogType.DRIVER,Level.OFF);
+		pref.enable(LogType.CLIENT,Level.OFF);
+		pref.enable(LogType.PERFORMANCE,Level.OFF);
+		pref.enable(LogType.PROFILER,Level.OFF);
+		pref.enable(LogType.SERVER,Level.OFF);
+		
+		DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+		desiredCapabilities.setCapability(CapabilityType.LOGGING_PREFS, pref);
 		
 		
-		WebDriver driver = new FirefoxDriver();
+		
+		WebDriver driver = new FirefoxDriver(desiredCapabilities);
 		driver.get(prop.getProperty("url"));
 		driver.manage().window().setSize(new Dimension(1936, 1056));		
 		System.out.println("Realizando Login");
@@ -97,6 +113,7 @@ public class GeraPonto {
 			e.printStackTrace();
 		}
 		System.out.println("Terminando o Programa");
+		driver.quit();
 		driver.close();
 	}
 }
